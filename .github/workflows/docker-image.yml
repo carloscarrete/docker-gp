@@ -18,24 +18,33 @@ jobs:
       with:
         fetch-depth:  0
         
+    - name: Git Semantic Version
+      uses: PaulHatch/semantic-version@v4.0.3
+      with:
+        major_pattern:  "major:"
+        minor_pattern:  "feat:"
+        format: "${major}.${minor}.${patch}-prerelease${increment}"
+      id: verson
+
+        
     - name: Docker Login
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        NEW_VERSION:  ${{ steps.version.outputs.version }}
       run: |
-        echo "Iniciando login"
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-        echo "Fin login"
+        echo "NEW VERSION XDDDDDD $NEW_VERSION"
         
-    - name: Build Image
-      run:  |
-        docker build -t carloskrt/gp:0.0.2 .
-        docker build -t carloskrt/gp:latest .
+#     - name: Build Image
+#       run:  |
+#         docker build -t carloskrt/gp:0.0.2 .
+#         docker build -t carloskrt/gp:latest .
       
-    - name: Push Image
-      run:  |
-        docker push carloskrt/gp:0.0.2
-        docker push carloskrt/gp:latest
+#     - name: Push Image
+#       run:  |
+#         docker push carloskrt/gp:0.0.2
+#         docker push carloskrt/gp:latest
 
         
         
