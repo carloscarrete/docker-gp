@@ -27,6 +27,22 @@ jobs:
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
         echo "Fin login"
         
+    - name: Build Image
+      run:  |
+        docker build -t carloskrt/gp:0.0.2 .
+        
+    - name: Push Image
+      run:  |
+        docker push carloskrt/gp:0.0.2 
+
+        
+        
+        
+        
+        
+        
+        
+        
         
         
 #     - name: Build the Docker image
